@@ -1,0 +1,32 @@
+plugins {
+    id 'application'
+    id 'pl.allegro.tech.build.axion-release' version '1.15.4'
+}
+
+version = scmVersion.version
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Use JUnit Jupiter for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation "org.jsoup:jsoup:1.15.3"
+    implementation 'org.mongodb:mongodb-driver-sync:4.10.2'
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+    
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'javalinkedin.App'
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
