@@ -3,6 +3,10 @@ plugins {
     id 'pl.allegro.tech.build.axion-release' version '1.15.4'
 }
 
+scmVersion {
+    useHighestVersion.set(true)
+}
+
 version = scmVersion.version
 
 repositories {
