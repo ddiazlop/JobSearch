@@ -1,0 +1,12 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en-us">
+<head>
+    <title>Spring Boot - Hello World!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+<h1 th:text="${message}" />
+<p th:text="'Today is: ' + ${T(java.time.LocalDate).now()}"/>
+</body>
+</html>
