@@ -49,6 +49,7 @@ public class JobScrapController {
                         job.select("h4.base-search-card__subtitle").text(),
                         job.select("span.job-search-card__location").text()
                 );
+
                 jobs.add(j);
             }
 

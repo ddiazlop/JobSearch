@@ -14,11 +14,18 @@ public class Job {
     private final String title;
     private final String company;
     private final String location;
+    private Integer likelihood;
 
-    public String toString() {
-        return "Job: " + title + " at " + company + " in " + location;
+    public Job(String title, String company, String location){
+        this.title = title;
+        this.company = company;
+        this.location = location;
+        this.likelihood = 0;
     }
 
 
+    public String toString() {
+        return "Job: " + title + " at " + company + " in " + location + " [" + likelihood + "]";
+    }
 
 }
