@@ -41,9 +41,11 @@ public class JobScrapController {
                     .userAgent("Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
                     .header("Accept-Language", "en-US,en;q=0.9,es;q=0.8")
                     .get();
-            Elements htmlJobs = doc.select("div.base-search-card__info");
+            Elements htmlJobs = doc.select("div.base-card relative w-full hover:no-underline focus:no-underline base-card--link base-search-card base-search-card--link job-search-card job-search-card--active");
 
             for (Element job : htmlJobs) {
+                String url = job.select("base-card__full-link").text();
+
                 Job j = new Job(
                         job.select("h3.base-search-card__title").text(),
                         job.select("h4.base-search-card__subtitle").text(),
@@ -67,6 +69,30 @@ public class JobScrapController {
 
         model.addAttribute("message", "Hello World 5");
         return "home";
+    }
+
+    private static Integer getLikelihood(String url) {
+        Integer likelihood = 0;
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(URL1)
+                    .userAgent("Mozilla/5.0 (Windows NT 11.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+                    .header("Accept-Language", "en-US,en;q=0.9,es;q=0.8")
+                    .get();
+
+            String description = doc.select("div.description__text description__text--rich").text();
+            // TODO: Get some keywords with String.matches()
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+        return likelihood;
     }
 
 }

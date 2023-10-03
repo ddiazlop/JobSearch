@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html th:replace="~{common/layout :: layout(~{::section})}" xmlns:th="http://www.thymeleaf.org" lang="en-us">
+<head><title>Expenses</title></head>
+
+<body>
+
+<section>
+
+    <div class="container">
+        <h1 class="display-1 mt-5 mb-2 fw-bold">Expenses</h1>
+    </div>
+
+   <div th:replace="~{expenses/sections/monthlyOverview::overview}">
+   </div>
+
+    <div class="container mt-5 mb-5">
+        <form>
+            <div class="mb-3">
+                <label for="concept" class="form-label">Concept</label>
+                <input type="email" class="form-control" id="concept" aria-describedby="emailHelp">
+            </div>
+            //TODO: Continue with this.
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+
+
+</section>
+
+</body>
+</html>
