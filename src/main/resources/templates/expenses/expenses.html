@@ -13,20 +13,28 @@
    <div th:replace="~{expenses/sections/monthlyOverview::overview}">
    </div>
 
-    <div class="container mt-5 mb-5">
-        <form>
-            <div class="mb-3">
-                <label for="concept" class="form-label">Concept</label>
-                <input type="email" class="form-control" id="concept" aria-describedby="emailHelp">
+    <form action="#" class="container align-items-start" method="post" th:action="@{/expenses}" th:object="${expenseForm}">
+        <div class="row mt-5 mb-2 g-2">
+
+                <div class="col mb-3 align-self-center">
+                    <label for="conceptInput" class="form-label">Concept</label>
+                    <input type="text" class="form-control" id="conceptInput" th:field="*{concept}">
+                    <p th:if="${#fields.hasErrors('concept')}" th:errorclass="text-danger" th:errors="*{concept}">Invalid amount</p>
+                </div>
+                <div class="col mb-3 align-self-center">
+                    <label for="priceInput" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="priceInput" th:field="*{amount}">
+                    <p th:if="${#fields.hasErrors('amount')}" th:errorclass="text-danger" th:errors="*{amount}">Invalid amount</p>
+                </div>
+
+
+            <div class="d-grid gap-2 col-1 mx-auto h-50 align-self-end">
+                <button type="submit" class="btn btn-primary fs-1">
+                    <i class="fas fa-plus"></i>
+                </button>
             </div>
-            //TODO: Continue with this.
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+        </div>
+    </form>
 
 
 
