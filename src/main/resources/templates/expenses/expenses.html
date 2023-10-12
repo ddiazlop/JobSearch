@@ -10,33 +10,45 @@
         <h1 class="display-1 mt-5 mb-2 fw-bold">Expenses</h1>
     </div>
 
-   <div th:replace="~{expenses/sections/monthlyOverview::overview}">
-   </div>
+   <div th:replace="~{expenses/sections/monthlyOverview::overview}"></div>
 
-    <form action="#" class="container align-items-start" method="post" th:action="@{/expenses}" th:object="${expenseForm}">
-        <div class="row mt-5 mb-2 g-2">
+</section>
 
-                <div class="col mb-3 align-self-center">
-                    <label for="conceptInput" class="form-label">Concept</label>
-                    <input type="text" class="form-control" id="conceptInput" th:field="*{concept}">
-                    <p th:if="${#fields.hasErrors('concept')}" th:errorclass="text-danger" th:errors="*{concept}">Invalid amount</p>
-                </div>
-                <div class="col mb-3 align-self-center">
-                    <label for="priceInput" class="form-label">Amount</label>
-                    <input type="number" class="form-control" id="priceInput" th:field="*{amount}">
-                    <p th:if="${#fields.hasErrors('amount')}" th:errorclass="text-danger" th:errors="*{amount}">Invalid amount</p>
-                </div>
+<section>
+    <div th:replace="~{expenses/sections/addExpenseForm::addExpenseForm}"></div>
+</section>
 
+<section>
+    <div class="container pb-xl-5">
+        <table class="table table-striped ">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Concept</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Date</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody class="fs-5">
+            <tr th:each="expense, iter : ${expenses}">
+                <th th:text="${iter.index + 1}" scope="row" class="align-middle">Id</th>
+                <td th:text="${expense.concept}" class="align-middle">Concept</td>
+                <td th:text="${expense.amount}" class="align-middle">Amount</td>
+                <td th:text="${expense.date}" class="align-middle">Date</td>
 
-            <div class="d-grid gap-2 col-1 mx-auto h-50 align-self-end">
-                <button type="submit" class="btn btn-primary fs-1">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
-        </div>
-    </form>
-
-
+                <td>
+                    <form th:action="@{/expenses/delete}" method="post">
+                        <input type="hidden" name="itemId" th:value="${expense.id}" />
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 </section>
 

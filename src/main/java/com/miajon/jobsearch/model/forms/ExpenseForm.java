@@ -11,10 +11,10 @@ public class ExpenseForm {
     private String concept;
 
     @AmountNotZeroConstraint
-    private Integer amount;
+    private Double amount;
 
     public ExpenseForm() {
         this.concept = "";
-        this.amount = 0;
+        this.amount = 0.;
     }
 }

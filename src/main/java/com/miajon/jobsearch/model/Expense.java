@@ -4,8 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @Document(collection = "expenses")
@@ -14,17 +13,17 @@ public class Expense {
     @Id
     private String id;
 
-    private final String concept;
+    private String concept;
 
-    private final Integer amount;
+    private Double amount;
 
-    private final Date date;
+    private LocalDate date;
 
 
-    public Expense(String concept, Integer amount){
+    public Expense(String concept, Double amount){
         this.concept = concept;
         this.amount = amount;
-        this.date = Calendar.getInstance().getTime();
+        this.date = LocalDate.now();
 
     }
 
