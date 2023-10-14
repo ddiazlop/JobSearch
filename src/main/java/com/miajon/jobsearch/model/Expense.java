@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @Data
 @Document(collection = "expenses")
 public class Expense {
-
     @Id
     private String id;
 
@@ -19,12 +18,15 @@ public class Expense {
 
     private LocalDate date;
 
+    private Boolean monthly;
 
-    public Expense(String concept, Double amount){
+
+
+    public Expense(String concept, Double amount, Boolean monthly) {
         this.concept = concept;
         this.amount = amount;
+        this.monthly = monthly;
         this.date = LocalDate.now();
-
     }
 
 }

@@ -34,8 +34,11 @@
             <tr th:each="expense, iter : ${expenses}">
                 <th th:text="${iter.index + 1}" scope="row" class="align-middle">Id</th>
                 <td th:text="${expense.concept}" class="align-middle">Concept</td>
-                <td th:text="${expense.amount}" class="align-middle">Amount</td>
+                <td class="align-middle">
+                    <span th:text="${expense.amount}+ '€'" th:classappend="${expense.amount >= 0} ? 'text-success' : 'text-danger'"></span>
+                </td>
                 <td th:text="${expense.date}" class="align-middle">Date</td>
+
 
                 <td>
                     <form th:action="@{/expenses/delete}" method="post">

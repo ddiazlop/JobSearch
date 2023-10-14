@@ -26,4 +26,8 @@ public class ExpenseService {
     public void deleteExpense(String id) {
         this.expenseRepository.deleteById(id);
     }
+
+    public Double getTotalAmount() {
+        return this.expenseRepository.getTotalAmount();
+    }
 }

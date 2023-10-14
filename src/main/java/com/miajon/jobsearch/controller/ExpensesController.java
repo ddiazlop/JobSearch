@@ -25,7 +25,9 @@ public class ExpensesController {
 
     private void refreshView(Model model) {
         model.addAttribute(MODEL_FORM, new ExpenseForm());
+        model.addAttribute("totalAmount", expenseService.getTotalAmount());
         model.addAttribute(MODEL_EXPENSES_LIST, expenseService.findAllExpenses());
+
     }
 
     @GetMapping("/expenses")
@@ -38,7 +40,9 @@ public class ExpensesController {
     public String addExpense(@ModelAttribute @Valid ExpenseForm expenseForm,BindingResult result, Model model) {
 
         if (!result.hasErrors()) {
-            Expense expense = new Expense(expenseForm.getConcept(), expenseForm.getAmount());
+            Double realAmount = expenseForm.isIncome() ? expenseForm.getAmount() : -expenseForm.getAmount();
+            //TODO: Make monthly expenses work
+            Expense expense = new Expense(expenseForm.getConcept(), realAmount, false);
             expenseService.saveExpense(expense);
             this.refreshView(model);
 
