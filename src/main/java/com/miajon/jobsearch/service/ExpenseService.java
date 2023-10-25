@@ -30,4 +30,8 @@ public class ExpenseService {
     public Double getTotalAmount() {
         return this.expenseRepository.getTotalAmount();
     }
+
+    public Iterable<Expense> findMonthlyExpenses() {
+        return this.expenseRepository.findMonthlyExpenses(true);
+    }
 }

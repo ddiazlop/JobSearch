@@ -14,6 +14,7 @@ public class ExpensesController {
 
     private final ExpenseService expenseService;
 
+
     public ExpensesController(ExpenseService expenseService) {
         this.expenseService = expenseService;
     }
@@ -22,16 +23,29 @@ public class ExpensesController {
     private static final String MODEL_EXPENSES_LIST = "expenses";
     private static final String DEFAULT_VIEW = "expenses/expenses";
 
+    private Boolean isMonthlyList = false;
+
 
     private void refreshView(Model model) {
+        Double totalAmount = expenseService.getTotalAmount();
         model.addAttribute(MODEL_FORM, new ExpenseForm());
-        model.addAttribute("totalAmount", expenseService.getTotalAmount());
-        model.addAttribute(MODEL_EXPENSES_LIST, expenseService.findAllExpenses());
+        model.addAttribute("totalAmount",totalAmount == null ? 0 : totalAmount);
+        //TODO: Show total monthly expenses.
+        model.addAttribute(MODEL_EXPENSES_LIST,(this.isMonthlyList) ?expenseService.findMonthlyExpenses() :expenseService.findAllExpenses());
+        model.addAttribute("isMonthlyList", this.isMonthlyList);
 
     }
 
     @GetMapping("/expenses")
     public String expenses(Model model) {
+        this.isMonthlyList = false;
+        this.refreshView(model);
+        return DEFAULT_VIEW;
+    }
+
+    @GetMapping("/expenses/monthly")
+    public String monthlyExpenses(Model model) {
+        this.isMonthlyList = true;
         this.refreshView(model);
         return DEFAULT_VIEW;
     }
@@ -41,8 +55,7 @@ public class ExpensesController {
 
         if (!result.hasErrors()) {
             Double realAmount = expenseForm.isIncome() ? expenseForm.getAmount() : -expenseForm.getAmount();
-            //TODO: Make monthly expenses work
-            Expense expense = new Expense(expenseForm.getConcept(), realAmount, false);
+            Expense expense = new Expense(expenseForm.getConcept(), realAmount, expenseForm.getMonthly());
             expenseService.saveExpense(expense);
             this.refreshView(model);
 

@@ -16,9 +16,20 @@
                 <label for="priceInput" class="form-label">Amount</label>
                 <input type="number" class="form-control" id="priceInput" th:field="*{amount}" step="0.01">
                 <p th:if="${#fields.hasErrors('amount')}" th:errorclass="text-danger" th:errors="*{amount}">Invalid amount</p>
-                <div class="form-check align-text-center">
-                    <label for="isIncomeInput" class="form-check-label">Income</label>
-                    <input type="checkbox" class="form-check-input" id="isIncomeInput" th:field="*{income}">
+                <div class="row g-2">
+                    <div class="col">
+                        <div class="form-check align-text-center">
+                            <label for="isIncomeInput" class="form-check-label">Income</label>
+                            <input type="checkbox" class="form-check-input" id="isIncomeInput" th:field="*{income}">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-check align-text-center">
+                            <label for="isMonthly" class="form-check-label">Monthly</label>
+                            <input type="checkbox" class="form-check-input" id="isMonthly" th:field="*{monthly}">
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

@@ -17,6 +17,9 @@ public class ExpenseForm {
     @NotNull
     private Boolean income;
 
+    @NotNull
+    private Boolean monthly;
+
     public Boolean isIncome() {
         return this.income;
     }
@@ -25,5 +28,6 @@ public class ExpenseForm {
         this.concept = "";
         this.amount = 0.;
         this.income = false;
+        this.monthly = false;
     }
 }

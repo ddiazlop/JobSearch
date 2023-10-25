@@ -19,39 +19,25 @@
 </section>
 
 <section>
-    <div class="container">
-        <table class="table table-striped ">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Concept</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Date</th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody class="fs-5">
-            <tr th:each="expense, iter : ${expenses}">
-                <th th:text="${iter.index + 1}" scope="row" class="align-middle">Id</th>
-                <td th:text="${expense.concept}" class="align-middle">Concept</td>
-                <td class="align-middle">
-                    <span th:text="${expense.amount}+ '€'" th:classappend="${expense.amount >= 0} ? 'text-success' : 'text-danger'"></span>
-                </td>
-                <td th:text="${expense.date}" class="align-middle">Date</td>
+    <div id="tableViews">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-auto">
+                    <button id="latestExpensesBtn" th:class="${isMonthlyList == true} ? 'btn btn-outline-secondary':'btn btn-outline-primary'"
+                    th:onclick="|window.location.href = '/expenses'|"
+                    >Latest</button>
+                </div>
+                <div class="col-md-auto">
+                    <button id="monthlyExpensesBtn" th:class="${isMonthlyList == false} ? 'btn btn-outline-secondary':'btn btn-outline-primary'"
+                    th:onclick="|window.location.href = '/expenses/monthly'|"
+                    >Monthly</button>
+                </div>
 
-
-                <td>
-                    <form th:action="@{/expenses/delete}" method="post">
-                        <input type="hidden" name="itemId" th:value="${expense.id}" />
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+            </div>
+        </div>
     </div>
+
+    <div th:replace="~{expenses/sections/latestExpensesList::latestExpensesList}"></div>
 
 </section>
 

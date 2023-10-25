@@ -12,4 +12,7 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
             "{$project: { _id: 0, totalAmount: 1 }}"
     })
     public Double getTotalAmount();
+
+    @Query("{monthly: true}")
+    public Iterable<Expense> findMonthlyExpenses(Boolean monthly);
 }
