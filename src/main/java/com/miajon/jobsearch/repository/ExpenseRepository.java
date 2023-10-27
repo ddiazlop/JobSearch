@@ -15,4 +15,11 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
 
     @Query("{monthly: true}")
     public Iterable<Expense> findMonthlyExpenses(Boolean monthly);
+
+    @Aggregation(pipeline = {
+            "{$match: {monthly: true}}",
+            "{$group: {_id: null, totalAmount: {$sum: '$amount'}}}",
+            "{$project: { _id: 0, totalAmount: 1 }}"
+    })
+    public Double getTotalMonthlyAmount();
 }

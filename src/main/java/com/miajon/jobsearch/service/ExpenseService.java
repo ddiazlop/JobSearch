@@ -34,4 +34,8 @@ public class ExpenseService {
     public Iterable<Expense> findMonthlyExpenses() {
         return this.expenseRepository.findMonthlyExpenses(true);
     }
+
+    public Double getTotalMonthlyAmount() {
+        return this.expenseRepository.getTotalMonthlyAmount();
+    }
 }

@@ -28,9 +28,11 @@ public class ExpensesController {
 
     private void refreshView(Model model) {
         Double totalAmount = expenseService.getTotalAmount();
+        Double totalMonthlyAmount = expenseService.getTotalMonthlyAmount();
         model.addAttribute(MODEL_FORM, new ExpenseForm());
         model.addAttribute("totalAmount",totalAmount == null ? 0 : totalAmount);
-        //TODO: Show total monthly expenses.
+        //TODO: Maybe I can make it so its only one call to the database
+        model.addAttribute("totalMonthlyAmount", totalMonthlyAmount == null ? 0 : totalMonthlyAmount);
         model.addAttribute(MODEL_EXPENSES_LIST,(this.isMonthlyList) ?expenseService.findMonthlyExpenses() :expenseService.findAllExpenses());
         model.addAttribute("isMonthlyList", this.isMonthlyList);
 
