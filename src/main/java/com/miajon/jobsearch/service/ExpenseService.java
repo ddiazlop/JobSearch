@@ -38,4 +38,8 @@ public class ExpenseService {
     public Double getTotalMonthlyAmount() {
         return this.expenseRepository.getTotalMonthlyAmount();
     }
+
+    public Iterable<Expense> findAllByOrderByDateDesc() {
+        return this.expenseRepository.findAllByOrderByDateDesc();
+    }
 }

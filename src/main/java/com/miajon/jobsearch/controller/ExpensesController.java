@@ -31,9 +31,8 @@ public class ExpensesController {
         Double totalMonthlyAmount = expenseService.getTotalMonthlyAmount();
         model.addAttribute(MODEL_FORM, new ExpenseForm());
         model.addAttribute("totalAmount", totalAmount == null ? 0 : totalAmount);
-        //TODO: Maybe I can make it so its only one call to the database
         model.addAttribute("totalMonthlyAmount", totalMonthlyAmount == null ? 0 : totalMonthlyAmount);
-        model.addAttribute(MODEL_EXPENSES_LIST, (this.isMonthlyList) ? expenseService.findMonthlyExpenses() : expenseService.findAllExpenses());
+        model.addAttribute(MODEL_EXPENSES_LIST, (this.isMonthlyList) ? expenseService.findMonthlyExpenses() : expenseService.findAllByOrderByDateDesc());
         model.addAttribute("isMonthlyList", this.isMonthlyList);
 
     }
@@ -78,7 +77,7 @@ public class ExpensesController {
 
 
     private String redirectToOverview() {
-        return "redirect:/" + (this.isMonthlyList ? "expenses/monthly" : "expenses");
+        return "redirect:/" + (this.isMonthlyList ? "expenses/monthly" : MODEL_EXPENSES_LIST);
     }
 
 
