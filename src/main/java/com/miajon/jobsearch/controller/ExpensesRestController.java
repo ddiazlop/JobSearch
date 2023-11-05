@@ -1,9 +1,10 @@
 package com.miajon.jobsearch.controller;
 
+import com.miajon.jobsearch.model.Expense;
+import com.miajon.jobsearch.model.forms.ExpenseForm;
 import com.miajon.jobsearch.service.ExpenseService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -25,6 +26,18 @@ public class ExpensesRestController {
         Double totalAmount = expenseService.getTotalAmount();
         Double totalMonthlyAmount = expenseService.getTotalMonthlyAmount();
         return new ExpenseOverview(totalAmount, totalMonthlyAmount);
+    }
+
+    @GetMapping("/api/expenses/latest")
+    public Iterable<Expense> latestExpenses() {
+        return expenseService.findAllByOrderByDateDesc();
+    }
+
+    @PostMapping("/api/expenses")
+    public void addExpense(@ModelAttribute @Valid ExpenseForm expense) {
+        Double realAmount = expense.isIncome() ? expense.getAmount() : -expense.getAmount();
+        Expense expenseModel = new Expense(expense.getConcept(), realAmount, expense.getMonthly());
+        expenseService.saveExpense(expenseModel);
     }
 
 }
