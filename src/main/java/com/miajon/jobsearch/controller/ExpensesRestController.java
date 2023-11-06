@@ -40,4 +40,10 @@ public class ExpensesRestController {
         expenseService.saveExpense(expenseModel);
     }
 
+    @DeleteMapping(value = "/api/expenses/{id}")
+    public void deleteExpense(@PathVariable String id) {
+        expenseService.deleteExpense(id);
+
+    }
+
 }
