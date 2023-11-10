@@ -1,13 +1,11 @@
 package com.miajon.jobsearch.service;
 
 import com.miajon.jobsearch.model.Expense;
+import com.miajon.jobsearch.records.ExpenseRecords;
 import com.miajon.jobsearch.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ExpenseService {
@@ -46,7 +44,7 @@ public class ExpenseService {
         return this.expenseRepository.findAllByOrderByDateDesc();
     }
 
-    public List<String> getIncomePerMonth() {
+    public List<ExpenseRecords.ExpensesByMonth> getIncomePerMonth() {
         return this.expenseRepository.getIncomePerMonth();
     }
 

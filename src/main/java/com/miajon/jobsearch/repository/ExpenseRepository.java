@@ -1,14 +1,12 @@
 package com.miajon.jobsearch.repository;
 
 import com.miajon.jobsearch.model.Expense;
+import com.miajon.jobsearch.records.ExpenseRecords;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 
 public interface ExpenseRepository extends MongoRepository<Expense, String> {
@@ -32,10 +30,11 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
     })
     Double getTotalMonthlyAmount();
 
-    //TODO: MAKE THIS ALSO COUNT THE YEAR
     @Aggregation(pipeline = {
-            "{$group: {_id: {$month: '$date'}, totalAmount: {$sum: '$amount'}}}",
-            "{$project: { _id: 0, month: '$_id', totalAmount: 1 }}"
+            "{$group: {" +
+                    "_id: {$dateToString: {format: '%Y-%m', date: '$date'}}," +
+                    "totalAmount: {$sum: '$amount'}}}",
+            "{$project: { _id: 0, month: '$_id', amount: '$totalAmount' }}",
     })
-    List<String> getIncomePerMonth();
+    List<ExpenseRecords.ExpensesByMonth> getIncomePerMonth();
 }
