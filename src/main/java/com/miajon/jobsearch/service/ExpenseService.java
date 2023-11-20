@@ -48,4 +48,8 @@ public class ExpenseService {
         return this.expenseRepository.getIncomePerMonth();
     }
 
+    public List<Expense> findLastTenExpenses() {
+        return this.expenseRepository.findLastTenExpenses();
+    }
+
 }

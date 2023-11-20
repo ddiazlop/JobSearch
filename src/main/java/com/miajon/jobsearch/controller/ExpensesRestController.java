@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
@@ -47,6 +48,7 @@ public class ExpensesRestController {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8000/predict/expensesPerMonth/linear"))
                 .header("Content-Type", "application/json")
+                .version(HttpClient.Version.HTTP_1_1)
                 .POST(HttpRequest.BodyPublishers.ofString(expensesPerMonth))
                 .build();
 
@@ -68,7 +70,7 @@ public class ExpensesRestController {
 
     @GetMapping("/api/expenses/latest")
     public Iterable<Expense> latestExpenses() {
-        return expenseService.findAllByOrderByDateDesc();
+        return expenseService.findLastTenExpenses();
     }
 
     @GetMapping("/api/expenses/monthly")

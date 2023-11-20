@@ -24,6 +24,12 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
     Iterable<Expense> findAllByOrderByDateDesc();
 
     @Aggregation(pipeline = {
+            "{$sort: {date: -1}}",
+            "{$limit: 10}",
+    })
+    List<Expense> findLastTenExpenses();
+
+    @Aggregation(pipeline = {
             "{$match: {monthly: true}}",
             "{$group: {_id: null, totalAmount: {$sum: '$amount'}}}",
             "{$project: { _id: 0, totalAmount: 1 }}"
