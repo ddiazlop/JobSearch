@@ -35,7 +35,14 @@ public class ExpensesRestController {
         Double totalMonthlyAmount = expenseService.getTotalMonthlyAmount();
 
         List<ExpenseRecords.ExpensesByMonth> expensesPerMonthList = expenseService.getIncomePerMonth();
-        PredictionRecords.NumericPrediction prediction = predictNextMonthExpense(expensesPerMonthList);
+
+        PredictionRecords.NumericPrediction prediction = null;
+        try {
+            prediction = predictNextMonthExpense(expensesPerMonthList);
+        } catch (PredictionException e) {
+            prediction = new PredictionRecords.NumericPrediction(0.0, 0.0);
+        }
+         
 
 
         return new ExpenseRecords.ExpenseOverview(totalAmount, totalMonthlyAmount, prediction.prediction());
@@ -56,7 +63,7 @@ public class ExpensesRestController {
         try {
             response = java.net.http.HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
-            throw new InterruptedException("Error while trying to connect to the prediction service");
+            throw new PredictionException("Error while trying to connect to the prediction service");
         }
 
         if (response.statusCode() != 200) {

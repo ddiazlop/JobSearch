@@ -24,7 +24,7 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
     Iterable<Expense> findAllByOrderByDateDesc();
 
     @Aggregation(pipeline = {
-            "{$sort: {date: -1}}",
+            "{$sort: {date: -1, _id: -1}}",
             "{$limit: 10}",
     })
     List<Expense> findLastTenExpenses();
