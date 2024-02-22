@@ -5,5 +5,8 @@ public class ExpenseRecords {
     }
 
     public record ExpensesByMonth(String month, Double amount) {
+        public ExpensesByMonth mapToAbs() {
+            return new ExpensesByMonth(month, Math.abs(amount));
+        }
     }
 }

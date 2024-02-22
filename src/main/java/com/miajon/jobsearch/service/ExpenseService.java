@@ -52,4 +52,8 @@ public class ExpenseService {
         return this.expenseRepository.findLastTenExpenses();
     }
 
+    public List<ExpenseRecords.ExpensesByMonth> getExpensesPerMonth() {
+        return this.expenseRepository.getExpensesPerMonth();
+    }
+
 }
