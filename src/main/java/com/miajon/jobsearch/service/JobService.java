@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class JobService{
+public class JobService {
 
     @Autowired
     private JobRepository jobRepository;
 
+    @SuppressWarnings("null")
     public void saveJob(Job job) {
         jobRepository.save(job);
     }

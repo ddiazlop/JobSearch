@@ -16,6 +16,7 @@ public class ExpenseService {
         this.expenseRepository = expenseRepository;
     }
 
+    @SuppressWarnings("null")
     public void saveExpense(Expense expense) {
         this.expenseRepository.save(expense);
     }
@@ -24,6 +25,7 @@ public class ExpenseService {
         return this.expenseRepository.findAll();
     }
 
+    @SuppressWarnings("null")
     public void deleteExpense(String id) {
         this.expenseRepository.deleteById(id);
     }

@@ -1,7 +1,6 @@
 package com.miajon.jobsearch.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.miajon.jobsearch.exception.PredictionException;
 import com.miajon.jobsearch.model.Expense;
 import com.miajon.jobsearch.model.forms.ExpenseForm;
@@ -13,12 +12,6 @@ import com.miajon.jobsearch.tools.PredictionTools;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
