@@ -20,8 +20,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Collections;
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:3000")
@@ -64,9 +62,8 @@ public class ExpensesRestController {
     @GetMapping("/api/expenses/per-month")
     public List<ExpenseRecords.ExpensesByMonth> expensesPerMonth() {
         List<ExpenseRecords.ExpensesByMonth> expensesPerMonth = expenseService.getExpensesPerMonth();
-        Collections.reverse(expensesPerMonth);
 
-        return expensesPerMonth.stream().map(expense -> expense.mapToAbs()).toList();
+        return expensesPerMonth.stream().sorted().map(expense -> expense.mapAmountToAbs().mapToMonthName()).toList();
     }
 
     @PostMapping("/api/expenses")
