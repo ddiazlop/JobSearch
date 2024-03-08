@@ -36,17 +36,16 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
         Double getTotalMonthlyAmount();
 
         @Aggregation(pipeline = {
-                        "{$group: {" +
-                                        "_id: {$dateToString: {format: '%Y-%m', date: '$date'}}," +
-                                        "totalAmount: {$sum: '$amount'}}}",
-                        "{$project: { _id: 0, month: '$_id', amount: '$totalAmount' }}",
+                        "{$match: {amount: {$gt: 0}}}",
+                        "{$group: {_id: {$dateToString: {format: '%Y-%m', date: '$date'}}, totalAmount: {$sum: '$amount'}}}",
+                        "{$project: { _id: 0, month: '$_id', amount: '$totalAmount' }}"
         })
-        List<ExpenseRecords.ExpensesByMonth> getIncomePerMonth();
+        List<ExpenseRecords.ExpenseByMonth> getIncomePerMonth();
 
         @Aggregation(pipeline = {
                         "{$match: {amount: {$lt: 0}}}",
                         "{$group: {_id: {$dateToString: {format: '%Y-%m', date: '$date'}}, totalAmount: {$sum: '$amount'}}}",
                         "{$project: { _id: 0, month: '$_id', amount: '$totalAmount' }}"
         })
-        List<ExpenseRecords.ExpensesByMonth> getExpensesPerMonth();
+        List<ExpenseRecords.ExpenseByMonth> getExpensesPerMonth();
 }

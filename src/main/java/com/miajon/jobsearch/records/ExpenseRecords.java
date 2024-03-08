@@ -1,25 +1,31 @@
 package com.miajon.jobsearch.records;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class ExpenseRecords {
     public record ExpenseOverview(Double total, Double monthly, Double prediction) {
     }
 
-    public record ExpensesByMonth(String month, Double amount) implements Comparable<ExpensesByMonth> {
+    public record ExpenseByMonth(String month, Double amount) implements Comparable<ExpenseByMonth> {
         private static final String[] MONTHS = new String[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
                 "Sep", "Oct", "Nov", "Dec" };
 
-        public ExpensesByMonth mapAmountToAbs() {
-            return new ExpensesByMonth(month, Math.abs(amount));
+        public ExpenseByMonth mapAmountToAbs() {
+            return new ExpenseByMonth(month, Math.abs(amount));
         }
 
-        public ExpensesByMonth mapToMonthName() {
+        public ExpenseByMonth mapToMonthName() {
             String[] yearMonth = month.split("-");
             int monthIndex = Integer.parseInt(yearMonth[1]) - 1;
-            return new ExpensesByMonth(yearMonth[0] + '-' + MONTHS[monthIndex], amount);
+            return new ExpenseByMonth(yearMonth[0] + '-' + MONTHS[monthIndex], amount);
         }
 
         @Override
-        public int compareTo(ExpensesByMonth other) {
+        public int compareTo(ExpenseByMonth other) {
             String[] yearMonth = month.split("-");
             String[] otherYearMonth = other.month.split("-");
 
@@ -28,6 +34,49 @@ public class ExpenseRecords {
             }
 
             return Integer.compare(Integer.parseInt(yearMonth[0]), Integer.parseInt(otherYearMonth[0]));
+        }
+
+        public String toJson() {
+            return "{\"month\": \"" + month + "\", \"amount\": " + amount + "}";
+        }
+    }
+
+    public record ExpensesAndIncomeByMonth(List<ExpenseByMonth> expenses, List<ExpenseByMonth> income) {
+
+        public ExpensesAndIncomeByMonth(List<ExpenseByMonth> expenses, List<ExpenseByMonth> income) {
+            this.expenses = expenses;
+            this.income = income;
+            compensateLists();
+        }
+
+        private void compensateLists() {
+            if (expenses.size() > income.size()) {
+                for (ExpenseByMonth ExpenseByMonth : expenses) {
+                    if (income.stream().noneMatch(income -> income.month().equals(ExpenseByMonth.month()))) {
+                        income.add(new ExpenseByMonth(ExpenseByMonth.month(), 0.0));
+                    }
+                }
+            } else if (income.size() > expenses.size()) {
+                for (ExpenseByMonth ExpenseByMonth : income) {
+                    if (expenses.stream().noneMatch(income -> income.month().equals(ExpenseByMonth.month()))) {
+                        expenses.add(new ExpenseByMonth(ExpenseByMonth.month(), 0.0));
+                    }
+                }
+            }
+        }
+
+        public ExpensesAndIncomeByMonth getOrderedAmountsByMonthName() {
+            List<ExpenseByMonth> expensesPerMonthName = expenses.stream().sorted()
+                    .map(expense -> expense.mapAmountToAbs().mapToMonthName()).toList();
+            List<ExpenseByMonth> incomePerMonthName = income.stream().sorted()
+                    .map(expense -> expense.mapAmountToAbs().mapToMonthName()).toList();
+
+            return new ExpensesAndIncomeByMonth(expensesPerMonthName, incomePerMonthName);
+        }
+
+        public String toJson() {
+            return "{\"expenses\": " + expenses.stream().map(ExpenseByMonth::toJson).toList() + ", \"income\": "
+                    + income.stream().map(ExpenseByMonth::toJson).toList() + "}";
         }
     }
 }

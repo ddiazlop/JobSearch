@@ -15,7 +15,7 @@ import com.miajon.jobsearch.records.PredictionRecords;
 
 public class PredictionTools {
     public static PredictionRecords.NumericPrediction predictNextMonthExpense(
-            List<ExpenseRecords.ExpensesByMonth> expensesPerMonthList)
+            List<ExpenseRecords.ExpenseByMonth> expensesPerMonthList)
             throws JsonProcessingException, PredictionException, InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
         String expensesPerMonth = objectMapper.writeValueAsString(expensesPerMonthList);

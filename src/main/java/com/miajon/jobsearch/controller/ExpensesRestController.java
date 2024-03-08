@@ -6,6 +6,7 @@ import com.miajon.jobsearch.model.Expense;
 import com.miajon.jobsearch.model.forms.ExpenseForm;
 import com.miajon.jobsearch.records.ExpenseRecords;
 import com.miajon.jobsearch.records.PredictionRecords;
+import com.miajon.jobsearch.records.ExpenseRecords.ExpensesAndIncomeByMonth;
 import com.miajon.jobsearch.service.ExpenseService;
 import com.miajon.jobsearch.tools.PredictionTools;
 
@@ -30,7 +31,7 @@ public class ExpensesRestController {
         Double totalAmount = expenseService.getTotalAmount();
         Double totalMonthlyAmount = expenseService.getTotalMonthlyAmount();
 
-        List<ExpenseRecords.ExpensesByMonth> expensesPerMonthList = expenseService.getIncomePerMonth();
+        List<ExpenseRecords.ExpenseByMonth> expensesPerMonthList = expenseService.getIncomePerMonth();
 
         PredictionRecords.NumericPrediction prediction = null;
         try {
@@ -53,10 +54,12 @@ public class ExpensesRestController {
     }
 
     @GetMapping("/api/expenses/per-month")
-    public List<ExpenseRecords.ExpensesByMonth> expensesPerMonth() {
-        List<ExpenseRecords.ExpensesByMonth> expensesPerMonth = expenseService.getExpensesPerMonth();
+    public String expensesPerMonth() {
+        ExpensesAndIncomeByMonth expensesAndIncomeByMonth = new ExpensesAndIncomeByMonth(
+                expenseService.getExpensesPerMonth(),
+                expenseService.getIncomePerMonth());
 
-        return expensesPerMonth.stream().sorted().map(expense -> expense.mapAmountToAbs().mapToMonthName()).toList();
+        return expensesAndIncomeByMonth.getOrderedAmountsByMonthName().toJson();
     }
 
     @PostMapping("/api/expenses")

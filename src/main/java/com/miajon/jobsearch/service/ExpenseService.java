@@ -46,15 +46,15 @@ public class ExpenseService {
         return this.expenseRepository.findAllByOrderByDateDesc();
     }
 
-    public List<ExpenseRecords.ExpensesByMonth> getIncomePerMonth() {
-        return this.expenseRepository.getIncomePerMonth();
-    }
-
     public List<Expense> findLastTenExpenses() {
         return this.expenseRepository.findLastTenExpenses();
     }
 
-    public List<ExpenseRecords.ExpensesByMonth> getExpensesPerMonth() {
+    public List<ExpenseRecords.ExpenseByMonth> getIncomePerMonth() {
+        return this.expenseRepository.getIncomePerMonth();
+    }
+
+    public List<ExpenseRecords.ExpenseByMonth> getExpensesPerMonth() {
         return this.expenseRepository.getExpensesPerMonth();
     }
 
