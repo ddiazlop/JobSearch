@@ -2,10 +2,6 @@ package com.miajon.jobsearch.records;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class ExpenseRecords {
     public record ExpenseOverview(Double total, Double monthly, Double prediction) {
     }
