@@ -6,8 +6,8 @@ import com.miajon.jobsearch.model.Expense;
 import com.miajon.jobsearch.model.forms.ExpenseForm;
 import com.miajon.jobsearch.records.ExpenseRecords;
 import com.miajon.jobsearch.records.PredictionRecords;
-import com.miajon.jobsearch.records.AmountRecords.ExpensesByType;
 import com.miajon.jobsearch.records.ExpenseRecords.ExpensesAndIncomeByMonth;
+import com.miajon.jobsearch.records.ExpenseRecords.ExpensesByType;
 import com.miajon.jobsearch.records.ViewRecords.DashboardViewData;
 import com.miajon.jobsearch.service.ExpenseService;
 import com.miajon.jobsearch.tools.PredictionTools;
@@ -71,9 +71,11 @@ public class ExpensesRestController {
                 expenseService.getExpensesPerMonth(),
                 expenseService.getIncomePerMonth());
 
-        List<ExpensesByType> ExpensesByTypes = expenseService.getAmountsByType();
+        // TODO: Change name of ExpensesByType to singular form
+        List<ExpensesByType> expensesByType = expenseService.getAmountsByType();
 
-        String dashBoardViewData = DashboardViewData.of(expensesAndIncomeByMonth, ExpensesByTypes).toJson();
+        String dashBoardViewData = DashboardViewData.of(expensesAndIncomeByMonth,
+                expensesByType).toJson();
         return dashBoardViewData;
     }
 

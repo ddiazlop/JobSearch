@@ -2,6 +2,8 @@ package com.miajon.jobsearch.records;
 
 import java.util.List;
 
+import com.miajon.jobsearch.model.enums.ExpenseType;
+
 public class ExpenseRecords {
     public record ExpenseOverview(Double total, Double monthly, Double prediction) {
     }
@@ -34,6 +36,17 @@ public class ExpenseRecords {
 
         public String toJson() {
             return "{\"month\": \"" + month + "\", \"amount\": " + amount + "}";
+        }
+    }
+
+    public record ExpensesByType(Double amount, ExpenseType type) {
+        public ExpensesByType(Double amount, ExpenseType type) {
+            this.amount = Math.abs(amount);
+            this.type = type;
+        }
+
+        public String toJson() {
+            return "{\"type\": \"" + type + "\", \"amount\": " + amount + "}";
         }
     }
 

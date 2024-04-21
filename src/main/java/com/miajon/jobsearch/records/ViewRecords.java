@@ -1,7 +1,7 @@
 package com.miajon.jobsearch.records;
 
-import com.miajon.jobsearch.records.AmountRecords.ExpensesByType;
 import com.miajon.jobsearch.records.ExpenseRecords.ExpensesAndIncomeByMonth;
+import com.miajon.jobsearch.records.ExpenseRecords.ExpensesByType;
 
 import java.util.List;
 

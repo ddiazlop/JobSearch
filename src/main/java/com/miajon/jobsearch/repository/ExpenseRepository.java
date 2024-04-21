@@ -1,7 +1,6 @@
 package com.miajon.jobsearch.repository;
 
 import com.miajon.jobsearch.model.Expense;
-import com.miajon.jobsearch.records.AmountRecords;
 import com.miajon.jobsearch.records.ExpenseRecords;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -55,5 +54,5 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
                         "{$group: {_id: '$type', totalAmount: {$sum: '$amount'}}}",
                         "{$project: {_id: 0, type: '$_id', amount: '$totalAmount'}}"
         })
-        List<AmountRecords.ExpensesByType> getAmountsByType();
+        List<ExpenseRecords.ExpensesByType> getAmountsByType();
 }

@@ -1,8 +1,8 @@
 package com.miajon.jobsearch.service;
 
 import com.miajon.jobsearch.model.Expense;
-import com.miajon.jobsearch.records.AmountRecords.ExpensesByType;
 import com.miajon.jobsearch.records.ExpenseRecords.ExpenseByMonth;
+import com.miajon.jobsearch.records.ExpenseRecords.ExpensesByType;
 import com.miajon.jobsearch.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
 
