@@ -6,7 +6,9 @@ import com.miajon.jobsearch.model.Expense;
 import com.miajon.jobsearch.model.forms.ExpenseForm;
 import com.miajon.jobsearch.records.ExpenseRecords;
 import com.miajon.jobsearch.records.PredictionRecords;
+import com.miajon.jobsearch.records.AmountRecords.ExpensesByType;
 import com.miajon.jobsearch.records.ExpenseRecords.ExpensesAndIncomeByMonth;
+import com.miajon.jobsearch.records.ViewRecords.DashboardViewData;
 import com.miajon.jobsearch.service.ExpenseService;
 import com.miajon.jobsearch.tools.PredictionTools;
 
@@ -14,6 +16,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @CrossOrigin(origins = { "http://127.0.0.1:3000", "http://localhost:3000" })
@@ -55,11 +58,23 @@ public class ExpensesRestController {
 
     @GetMapping("/api/expenses/per-month")
     public String expensesPerMonth() {
-        ExpensesAndIncomeByMonth expensesAndIncomeByMonth = new ExpensesAndIncomeByMonth(
+        ExpensesAndIncomeByMonth expensesAndIncomeByMonth = ExpensesAndIncomeByMonth.ofOrdered(
                 expenseService.getExpensesPerMonth(),
                 expenseService.getIncomePerMonth());
 
-        return expensesAndIncomeByMonth.getOrderedAmountsByMonthName().toJson();
+        return expensesAndIncomeByMonth.toJson();
+    }
+
+    @GetMapping("/api/expenses/dashboard")
+    public String getDashboardData() {
+        ExpensesAndIncomeByMonth expensesAndIncomeByMonth = ExpensesAndIncomeByMonth.ofOrdered(
+                expenseService.getExpensesPerMonth(),
+                expenseService.getIncomePerMonth());
+
+        List<ExpensesByType> ExpensesByTypes = expenseService.getAmountsByType();
+
+        String dashBoardViewData = DashboardViewData.of(expensesAndIncomeByMonth, ExpensesByTypes).toJson();
+        return dashBoardViewData;
     }
 
     @PostMapping("/api/expenses")

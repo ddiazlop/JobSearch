@@ -45,6 +45,11 @@ public class ExpenseRecords {
             compensateLists();
         }
 
+        public static ExpensesAndIncomeByMonth ofOrdered(List<ExpenseByMonth> expenses, List<ExpenseByMonth> income) {
+            ExpensesAndIncomeByMonth expensesAndIncomeByMonth = new ExpensesAndIncomeByMonth(expenses, income);
+            return expensesAndIncomeByMonth.getOrderedAmountsByMonthName();
+        }
+
         private void compensateLists() {
             if (expenses.size() > income.size()) {
                 for (ExpenseByMonth ExpenseByMonth : expenses) {

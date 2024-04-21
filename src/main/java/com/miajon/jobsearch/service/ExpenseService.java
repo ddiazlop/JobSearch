@@ -1,7 +1,8 @@
 package com.miajon.jobsearch.service;
 
 import com.miajon.jobsearch.model.Expense;
-import com.miajon.jobsearch.records.ExpenseRecords;
+import com.miajon.jobsearch.records.AmountRecords.ExpensesByType;
+import com.miajon.jobsearch.records.ExpenseRecords.ExpenseByMonth;
 import com.miajon.jobsearch.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
 
@@ -50,12 +51,16 @@ public class ExpenseService {
         return this.expenseRepository.findLastTenExpenses();
     }
 
-    public List<ExpenseRecords.ExpenseByMonth> getIncomePerMonth() {
+    public List<ExpenseByMonth> getIncomePerMonth() {
         return this.expenseRepository.getIncomePerMonth();
     }
 
-    public List<ExpenseRecords.ExpenseByMonth> getExpensesPerMonth() {
+    public List<ExpenseByMonth> getExpensesPerMonth() {
         return this.expenseRepository.getExpensesPerMonth();
+    }
+
+    public List<ExpensesByType> getAmountsByType() {
+        return this.expenseRepository.getAmountsByType();
     }
 
 }
